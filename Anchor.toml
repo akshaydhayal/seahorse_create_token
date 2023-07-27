@@ -1,0 +1,15 @@
+[features]
+seeds = true
+skip-lint = false
+[programs.localnet]
+create_token = "FtbTRXo8m52MSWn4iYbpsZex2FoSnnRmY9hFUoXkmEFR"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "Localnet"
+wallet = "/home/ubuntu-22/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"
