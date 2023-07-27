@@ -44,17 +44,14 @@ We have 3 functions/instructions in this Program. Let's understand all the diffe
 When someone wants to create a new token, we have to use something create-token function to initialize a new Mint Account. `initTokenMint` is the function where we create our TokenMint Accounts. TokenMint account contains the following informations: 
 * `mint-authority` which is a public-key (pubkey) authorized to mint this token
 *  the number of `decimals` of the token etc. 
-
-This account stores general information about the token and who has permissions over it.We can see the particular details about our TokenMint such as the addresses of the mint,mint authority, and the decimal precision of the token. 
-
-Observe that there is no data about token holdings of particular individuals. These are stored in Token Accounts.
+This account stores general information about the token and who has permissions over it.
 <p align="center">
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg1.png" alt="Alt text" title="Optional title" height="180" width="550">
 </p>
 
 
 ### 2. initTokenAccount
-A Token Account holds tokens of a specific "mint" and has a specified "owner" of the account. Ownership relationships become a bit confusing, though. The token account itself is owned by the Token program and it is the Token program who controls access to these tokens using the owner, and delegate fields within the account. The owner is the pubkey who can spend/transfer the tokens, and the owner can give rights to a delegate pubkey to spend up to a delegatedAmount of tokens. Only the owner is authorized to decrease the Token Account balance (transfer, burn, etc.) while anyone can send tokens to the Token Account to increase its balance.
+A Token Account holds tokens of a specific "mint" and has a specified "owner" of the account. The token account itself is owned by the Token program and it is the Token program who controls access to these tokens using the owner, and delegate fields within the account. The owner is the pubkey who can spend/transfer the tokens, and the owner can give rights to a delegate pubkey to spend up to a delegatedAmount of tokens. 
 
 The TokenAccount has number of fields like:
 * mint - this is the mint whose tokens this this account will hold
@@ -65,17 +62,8 @@ We have created below 2 TokenAccounts containing 0 token now.
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg2.png" alt="Alt text" title="Optional title" height="150" width="740">
 </p>
 
-<p float="left">
-  <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg3.png" width="460" height="185"/> 
-  <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg4.png" width="460" height="185"/>
-</p>
-
 ### 3. useTokenMint
 Minting tokens is the process of issuing new tokens into circulation. When you mint tokens, you increase the supply of the token mint and deposit the newly minted tokens into a token account. Only the mint authority of a token mint is allowed to mint new tokens.
-This process updates both, the user’s balance (in the token-account) and the supply (in the mint account). 
-<p align="center">
-  <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg6.png" alt="Alt text" title="Optional title" height="250" width="800">
-</p>
 
 The user's token balance has been updated to 3000 now.
 <p align="center">
