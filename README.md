@@ -44,15 +44,7 @@ We have 3 functions/instructions in this Program. Let's understand all the diffe
 When someone wants to create a new token, we have to use something create-token function to initialize a new Mint Account. `initTokenMint` is the function where we create our TokenMint Accounts. TokenMint account contains the following informations: 
 * `mint-authority` which is a public-key (pubkey) authorized to mint this token
 *  the number of `decimals` of the token etc. 
-```
-def init_token_mint(new_token_mint: Empty[TokenMint], signer: Signer):
-  new_token_mint.init(
-    payer = signer,
-    seeds = ['token-mint', signer],
-    decimals = 0,
-    authority = signer
-  )
-  ```
+
 This account stores general information about the token and who has permissions over it.We can see the particular details about our TokenMint such as the addresses of the mint,mint authority, and the decimal precision of the token. 
 
 Observe that there is no data about token holdings of particular individuals. These are stored in Token Accounts.
@@ -67,14 +59,7 @@ A Token Account holds tokens of a specific "mint" and has a specified "owner" of
 The TokenAccount has number of fields like:
 * mint - this is the mint whose tokens this this account will hold
 * authority - the account that has authority over this account
-```
-def init_token_account(new_token_account: Empty[TokenAccount],recipient: Empty[TokenAccount],
-                       mint: TokenMint,signer: Signer):
-  new_token_account.init(payer = signer, seeds = ['token-account1', signer],
-                         mint = mint, authority = signer)
-  recipient.init(payer = signer, seeds = ['token-account2', signer],
-                         mint = mint, authority = signer)
-```
+
 We have created below 2 TokenAccounts containing 0 token now.
 <p align="center">
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg2.png" alt="Alt text" title="Optional title" height="150" width="740">
@@ -84,12 +69,6 @@ We have created below 2 TokenAccounts containing 0 token now.
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg3.png" width="460" height="185"/> 
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg4.png" width="460" height="185"/>
 </p>
-We can create Associated TokenAccounts also. An Associated Token Account is a Token Account where the address of the Token Account is derived using an owner's public key and a token mint. Associated Token Accounts provide a deterministic way to find the Token Account owned by a specific publicKey for a specific token mint. You can create it like: 
-
-```
-  new_token_account.init( payer = signer, mint = mint, 
-  authority = signer, associated = True )
- ```
 
 ### 3. useTokenMint
 Minting tokens is the process of issuing new tokens into circulation. When you mint tokens, you increase the supply of the token mint and deposit the newly minted tokens into a token account. Only the mint authority of a token mint is allowed to mint new tokens.
@@ -98,21 +77,8 @@ This process updates both, the user’s balance (in the token-account) and the s
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg6.png" alt="Alt text" title="Optional title" height="250" width="800">
 </p>
 
-
-```
-def use_token_mint(mint: TokenMint,recipient: TokenAccount,signer: Signer):
-  mint.mint(authority = signer,
-  to = recipient, amount = u64(3000))
-```
 The user's token balance has been updated to 3000 now.
 <p align="center">
   <img src="https://github.com/akshaydhayal/Seahorse-Token-Program/blob/master/assets/figg5.png" alt="Alt text" title="Optional title" height="140" width="850">
 </p>
   
-  Additionally, we can burn some parts of minted tokens also. Burning tokens is the process of decreasing the token supply of a given token mint. Burning tokens removes them from the given token account and from broader circulation.Like below, we are burning 1000 tokens from the `recipient` account from his 3000 minted tokens above (so after this instruction, recipient` will gain exactly 2000 token.)
-  But recipient_signer` must be the authority for the `recipient` token account.
-  ```
-    mint.burn( authority = recipient_signer,
-    holder = recipient, amount = 1000
-  )
-  ```
