@@ -15,11 +15,11 @@ You can check if package got installed correctly by running command like :
 `seahorse -V`
 
 For this project, the version used are :
-* anchor 0.25.0
+* anchor 0.28.0
 
-* seahorse v0.2.5
+* seahorse v0.2.7
 
-* node 19.0.0
+* node 18.17.0
 
 ## Getting started with Seahorse
 We initialize Seahorse Project using command `seahorse init token_program`. This will create a project directory with multiple files which is mostly similar to anchor projects, just will write our seahorse program in `token_program/programs_py/token_program.py`
